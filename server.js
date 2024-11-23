@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, 'js')));
 app.use(express.static(path.join(__dirname, 'images')));
 app.use(express.static(__dirname)); // Serve the HTML files directly
 
-// POST route for sending email
+// POST route for sending emails
 app.post('/send-email', async (req, res) => {
     const { name, email, message } = req.body;
 

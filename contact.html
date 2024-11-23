@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A brief description of your website">
-    <meta name="author" content="Your Name">
+    <meta name="description" content="Contact page for Personal Portfolio">
+    <meta name="author" content="Callum Clayton">
     <title>Personal Portfolio - Contact</title>
 
     <!-- Favicon -->
@@ -13,6 +13,10 @@
 
     <!-- Bootstrap CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
@@ -37,60 +41,58 @@
 
     <!-- Main Content -->
     <main class="container mt-5 flex-grow-1">
-        <!-- Contact Form -->
+        <!-- Contact Section -->
         <section id="contact" class="mt-5">
-            <h2>Contact Us</h2>
-            <form id="contact-form">
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
+            <div class="text-center">
+                <h2>Contact Me</h2>
+                <p class="lead">Feel free to reach out! I’ll get back to you as soon as possible.</p>
+            </div>
+            <div class="card shadow mt-4">
+                <div class="card-body">
+                    <form id="contact-form">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Your Email Address" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control" id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
-                </div>
-                <div class="mb-3">
-                    <label for="message" class="form-label">Message</label>
-                    <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Send Message</button>
-            </form>
+            </div>
         </section>
     </main>
 
-    <!-- Sticky Footer -->
+    <!-- Footer -->
     <footer class="bg-dark text-white text-center py-4 mt-auto">
-        <p>&copy; 2024 My Website. All rights reserved.</p>
+        <div class="container">
+            <p>&copy; 2024 My Website. All rights reserved.</p>
+            <div class="d-flex justify-content-center">
+                <a href="https://www.linkedin.com/in/callum-clayton-302369234" target="_blank" class="text-white me-3" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin fa-2x"></i>
+                </a>
+                <a href="https://github.com/J3NKO?tab=repositories" target="_blank" class="text-white" aria-label="GitHub">
+                    <i class="fab fa-github fa-2x"></i>
+                </a>
+            </div>
+        </div>
     </footer>
+
 
     <!-- Bootstrap JavaScript Bundle (includes Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Custom JavaScript -->
-    <script>
-        document.getElementById('contact-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            const data = Object.fromEntries(formData.entries());
+    <!-- External JavaScript File For Contact Form -->
+    <script src="js/contact-form.js"></script>
 
-            try {
-                const response = await fetch('http://localhost:3000/send-email', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data),
-                });
-
-                if (response.ok) {
-                    alert('Email sent successfully!');
-                } else {
-                    alert('Failed to send email');
-                }
-            } catch (error) {
-                console.error(error);
-                alert('Failed to send email');
-            }
-        });
-    </script>
 </body>
 
 </html>
