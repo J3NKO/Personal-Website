@@ -6,14 +6,14 @@ document.getElementById('contact-form').addEventListener('submit', async (e) => 
     const formData = new FormData(e.target); //initiate a FormData object for efficiency from event
     const data = Object.fromEntries(formData.entries());
 
-    console.log(data);
-    console.log(JSON.stringify(data));
+    //console.log(data);
+    //console.log(JSON.stringify(data));
 
     try {
         const response = await fetch('http://localhost:3000/send-email', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            
+
             body: JSON.stringify(data),
         });
 

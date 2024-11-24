@@ -15,7 +15,8 @@ require('dotenv').config({ path: './pass.env' });
 
 //instance of express below
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+// ^ default port from environment and if not developement port 3000 
 
 // Middleware set up
 app.use(cors());
