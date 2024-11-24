@@ -10,7 +10,7 @@ document.getElementById('contact-form').addEventListener('submit', async (e) => 
     //console.log(JSON.stringify(data));
 
     try {
-        const response = await fetch('http://localhost:3000/send-email', {
+        const response = await fetch('https://obscure-plateau-00404-9f2e15015978.herokuapp.com/send-email', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
 
