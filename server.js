@@ -1,42 +1,62 @@
-//importing relavant libraries from express
+//importing relavant libraries from express, nodemailer and bodyParser
 
 const express = require('express');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
+
+//importing path module and cors middleware for future use incase I intergrate a remote backend without the same 
+//port and domain
 const cors = require('cors');
 const path = require('path');
 
+//.env file
+require('dotenv').config({ path: './pass.env' });
+
+
+//instance of express below
 const app = express();
 const PORT = 3000;
 
 // Middleware set up
 app.use(cors());
+//automatically parsing incoming requests
 app.use(bodyParser.json());
 
-// Serving my static files from 'assets', 'css', 'js', 'images', and root directory
+// Serving static files with express built in express.static method through 'app' server: from assets, css, js, images, and the root directory
 app.use(express.static(path.join(__dirname, 'assets')));
 app.use(express.static(path.join(__dirname, 'css')));
 app.use(express.static(path.join(__dirname, 'js')));
 app.use(express.static(path.join(__dirname, 'images')));
-app.use(express.static(__dirname)); // Serve the HTML files directly
+app.use(express.static(__dirname)); // Serve the static HTML files directly
 
-// POST route for sending emails
+
+// POST route for sending emails to use with contact form (only need one)
 app.post('/send-email', async (req, res) => {
-    const { name, email, message } = req.body;
+
+    const { name, email, message } = req.body; //destructuring the contact form request
 
     const transporter = nodemailer.createTransport({
-        service: 'gmail', 
+        host: 'smtp.mail.me.com',
+        port: 587, //STARTTLS port
+        secure: false, //STARTTLS will essentially upgrade the connection to secure so dont need to set to true
         auth: {
-            user: 'your-email@gmail.com',
-            pass: 'your-email-password',
+            user: process.env.ICLOUD_EMAIL, //hidden email in .env file
+            pass: process.env.ICLOUD_PASSWORD, //hidden password in .env file
+        },
+        tls: {
+            //dont need this I think because im using STARTTLS ----- ciphers: 'SSLv3',
+            rejectUnauthorized: true //requires SMTP server to have valid ssl cert, no man in the middle for me attack for me!
         },
     });
 
+
+    //mailOptions naming convention
     const mailOptions = {
-        from: email,
-        to: 'your-email@gmail.com',
-        subject: `New Contact Form Submission from ${name}`,
+        from: process.env.ICLOUD_EMAIL,
+        to: process.env.ICLOUD_EMAIL,
+        subject: `Contact Form Submission from ${name}`,
         text: message,
+        replyTo: email //using reply to header as email is not authoraised to post to my email
     };
 
     try {
@@ -47,6 +67,7 @@ app.post('/send-email', async (req, res) => {
         res.status(500).send('Failed to send email');
     }
 });
+
 
 // Start the server on port 3000
 app.listen(PORT, () => {
